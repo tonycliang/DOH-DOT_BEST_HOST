@@ -24,7 +24,7 @@ InfoStartDate = ""  # 设置项目口径日期，缺省为 get_start_date()
 # 以上信息应按实填入，但可缺省
 
 """================ 日志和报错模式 ================"""
-NeedTheLog = False   # 调试完后根据情况取消日志为False
+NeedTheLog = False  # 调试完后根据情况取消日志为False
 DebugModeErr = False  # 需要显示详尽的错误信息时True
 """ 当需要实现详尽报错信息时,用下面这段代码实现：
 except Exception as e:
@@ -63,7 +63,7 @@ def main():
         ErrorIpList = []
         add2log("=" * 50)
         for Domain in DomainList:
-            print("="*50)
+            print("=" * 50)
             print(f"正在获取{Domain}的IP地址清单")
             add2log(f"正在获取{Domain}的IP地址清单")
             ResultIPs, ErrorIpList = DnsIpBallot(Domain)
@@ -78,7 +78,7 @@ def main():
             if ErrorIpList:
                 for ErrorIp in ErrorIpList:
                     print(f"检测到DNS污染IP：{ErrorIp}")
-            # 告知用户开始测试
+                # 告知用户开始测试
                 print(f"开始测试无污染IP集：共{items_counter}个条目")
             else:
                 print(f"开始测试IP集：共{items_counter}个条目")

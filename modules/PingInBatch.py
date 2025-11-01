@@ -17,7 +17,8 @@ USER_MODE = False
 
 """================= 主程序入口 ================="""
 
-def main(): # 主程序
+
+def main():  # 主程序
 
     """主函数 - 纯交互模式"""
     global USER_MODE
@@ -30,23 +31,23 @@ def main(): # 主程序
     # 设置测试参数
     timeout = DEFAULT_TIMEOUT
     ping_times = DEFAULT_PING_TIMES
-    #尝试从ini取配置
+    # 尝试从ini取配置
 
     try:
         user_print("尝试读取ini文件")
         timeout_ini, ping_times_ini, ip_ini = read_settings_ini()
         if all([timeout_ini, ping_times_ini, ip_ini]):
-            timeout=timeout_ini
-            ping_times=ping_times_ini
-            IP_address=ip_ini
+            timeout = timeout_ini
+            ping_times = ping_times_ini
+            IP_address = ip_ini
             settings_ini = True
     except:
-         pass
-    #settings_ini = False
+        pass
+    # settings_ini = False
     if settings_ini:
         user_print("按ini文件批量测试：")
         for ip in IP_address:
-            #user_print(f"测试的ip：{ip}")
+            # user_print(f"测试的ip：{ip}")
             single_line_test(ip, timeout, ping_times)
 
         # 人工测试循环
@@ -62,8 +63,11 @@ def main(): # 主程序
             continue
         single_line_test(ip, timeout, ping_times)
 
+
 """================= 主计算函数 ================="""
-def ping_ip(ip: str, timeout: float = DEFAULT_TIMEOUT, ping_times: int = DEFAULT_PING_TIMES)\
+
+
+def ping_ip(ip: str, timeout: float = DEFAULT_TIMEOUT, ping_times: int = DEFAULT_PING_TIMES) \
         -> Tuple[int, float, float, float, float]:
     """使用 ping3 库 Ping 指定的 IP 地址并返回结果
         返回:
@@ -75,7 +79,7 @@ def ping_ip(ip: str, timeout: float = DEFAULT_TIMEOUT, ping_times: int = DEFAULT
             [4] max_delay (float): 成功的 Ping 请求的最大延迟（毫秒）"""
     # 存储延迟结果
     delays = []
-    timeout = timeout/1000 # 单位协调：ms--->秒
+    timeout = timeout / 1000  # 单位协调：ms--->秒
     # 执行多次 ping 测试
     for _ in range(ping_times):
         try:
@@ -108,7 +112,10 @@ def ping_ip(ip: str, timeout: float = DEFAULT_TIMEOUT, ping_times: int = DEFAULT
 
     return success_count, avg_delay, success_rate, min_delay, max_delay
 
+
 """================= 辅助函数区 ================="""
+
+
 def single_line_test(ip, timeout, ping_times):
     # 执行测试
     success_count, avg_delay, success_rate, min_delay, max_delay = ping_ip(ip, timeout, ping_times)
@@ -119,6 +126,7 @@ def single_line_test(ip, timeout, ping_times):
             f"结果: {ip} - 成功率={success_rate:.2%}, 平均延迟={avg_delay:.2f}ms, 最小延迟={min_delay:.2f}ms, 最大延迟={max_delay:.2f}ms")
     else:
         user_print(f"结果: {ip} - 所有请求超时")
+
 
 def is_valid_ip(ip: str) -> bool:
     """验证IP地址格式"""
@@ -133,6 +141,7 @@ def is_valid_ip(ip: str) -> bool:
             return False
 
     return True
+
 
 def read_settings_ini() -> Tuple[int, int, List[str]]:
     """
@@ -196,11 +205,12 @@ def read_settings_ini() -> Tuple[int, int, List[str]]:
         pass
     except Exception as e:
         # 其他错误处理
-        user_print(f"配置文件读取错误: {str(e)}","ERROR")
+        user_print(f"配置文件读取错误: {str(e)}", "ERROR")
 
     return time_out, ping_times, IP_address
-   
-def user_print(message,level = None):
+
+
+def user_print(message, level=None):
     global USER_MODE
     if not USER_MODE:
         return
